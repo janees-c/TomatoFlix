@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TomatoFlix</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #141414;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .navbar h1 {
+      color: #fa5038;
+      margin: 0 0 8px;
+    }
+
+    .navbar p {
+      color: #ccc;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px;
+      background: #1e1e1e;
+      border-radius: 12px;
+    }
+
+    #movieSearch {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px;
+      margin-bottom: 25px;
+      background: #292929;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 8px;
+    }
+
+
+    .movie-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,
+          minmax(200px, 1fr));
+      gap: 24px;
+      width: 100%;
+    }
+
+
+    .movie-card {
+      width: 200px;
+      background: #292929;
+      border: 1px solid #444;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .movie-card:hover {
+      transform: translateY(-5px);
+    }
+
+
+    .movie-card img {
+      display: block;
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      background: #292929;
+    }
+
+
+    .movie-info {
+      padding: 15px;
+    }
+
+    .movie-info h3 {
+      color: #fa5038;
+    }
+
+    .details-box {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: #292929;
+      border: 1px solid tomato;
+      border-radius: 10px;
+    }
+
+    .details-box h2 {
+      color: tomato;
+    }
+
+    button {
+      background: tomato;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #genreFilter {
+      padding: 12px;
+      margin-bottom: 25px;
+      background: #292929;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #genreFilter,
+    #languageFilter {
+      padding: 12px 14px;
+      margin-bottom: 25px;
+      background: #292929;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    #genreFilter:focus,
+    #languageFilter:focus {
+      border-color: tomato;
+    }
+
+    #genreFilter option,
+    #languageFilter option {
+      background: #292929;
+      color: white;
+    }
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    /* Main content */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    /* Movie cards */
+    .movie-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      width: 100%;
+    }
+
+    .movie-card {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .movie-card img {
+      display: block;
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 16px;
+      }
+
+      .movie-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .movie-card img {
+        height: 240px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
+      }
+
+      .container {
+        padding: 12px;
+      }
+
+      .navbar {
+        padding: 15px;
+      }
+
+      .movie-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .movie-card img {
+        height: 190px;
+      }
+
+      .movie-info {
+        padding: 10px;
+      }
+
+      .movie-info h3 {
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+
+      .movie-info p {
+        font-size: 13px;
+      }
+
+      #movieSearch,
+      #genreFilter,
+      #languageFilter {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 12px;
+      }
+
+      .details-box {
+        padding: 15px;
+        overflow-wrap: anywhere;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <h1>TomatoFlix</h1>
+    <p>Discover your favourite movies!</p>
+  </header>
+
+  <main class="container">
+    <h2>Popular Movies</h2>
+
+    <input type="text" id="movieSearch" placeholder="🔍 Search movies...">
+
+
+    <select id="genreFilter">
+      <option value="all">All Genres</option>
+      <option value="Action">Action</option>
+      <option value="Sci-Fi">Sci-Fi</option>
+      <option value="Drama">Drama</option>
+      <option value="Romance">Romance</option>
+      <option value="Thriller">Thriller</option>
+      <option value="Comedy">Comedy</option>
+    </select>
+
+    <select id="languageFilter">
+      <option value="all">All Languages</option>
+      <option value="English">English</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Tamil">Tamil</option>
+    </select>
+
+
+    <div class="movie-container">
+
+      <% movies.forEach(function(movie) { %>
+
+        <div class="movie-card" data-genre="<%= movie.genre %>" data-language="<%= movie.language %>">
+          <img src="<%= movie.poster %>" alt="<%= movie.title %>">
+
+          <div class="movie-info">
+            <h3>
+              <%= movie.title %>
+            </h3>
+            <p>Year: <%= movie.year %>
+            </p>
+            <p> Rating: <%= movie.rating %>%</p>
+          </div>
+
+        </div>
+
+        <% }); %>
+
+    </div>
+
+    <div id="movie-details" class="details-box">
+      <button id="close-details">Close ✖</button>
+      <h2 id="detail-title"></h2>
+      <p id="detail-year"></p>
+      <p id="detail-rating"></p>
+      <p id="detail-story"></p>
+    </div>
+  </main>
+
+  <script>
+    const searchInput = document.getElementById('movieSearch');
+    const movieCards = document.querySelectorAll('.movie-card');
+    const detailsBox = document.getElementById('movie-details');
+
+    const genreFilter = document.getElementById('genreFilter');
+    const languageFilter = document.getElementById('languageFilter');
+
+    // Movie details
+
+    // Movie details
+    movieCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        const title = card.querySelector('h3').textContent.trim();
+        const info = card.querySelectorAll('.movie-info p');
+
+        document.getElementById('detail-title').textContent = title;
+        document.getElementById('detail-year').textContent = info[0].textContent;
+        document.getElementById('detail-rating').textContent = info[1].textContent;
+
+        const stories = {
+          'Inception': 'A thief enters peoples dreams to steal secrets.',
+          'Interstellar': 'Explorers travel through space to search for a future for humanity.',
+          'The Dark Knight': 'Batman faces a dangerous criminal threatening Gotham City.',
+          'Manjummel Boys': 'A group of friends travel to Kodaikanal, where a cave adventure becomes a desperate rescue mission.',
+          'Premalu': 'A young man navigates love and relationships in this Malayalam romantic comedy.',
+          'Leo': 'A cafe owner with a mysterious past faces violent threats.',
+          '3 Idiots': 'Three engineering students challenge the pressure and expectations of the education system.',
+          'The Avengers': 'Earths mightiest heroes unite to protect the world.',
+          'Bangalore Days': 'Three cousins experience love, friendship and life in Bangalore.',
+          'Dangal': 'A former wrestler trains his daughters to become champion wrestlers.',
+          'Jai Bhim': 'A lawyer fights for justice for a tribal man who has been wrongfully arrested.',
+          'Avatar': 'A former Marine becomes involved in the struggle to protect the world of Pandora.',
+          'C.I.D. Moosa': 'A humorous Malayalam action comedy about a private detective and his adventures.',
+          'Drishyam': 'A man goes to extraordinary lengths to protect his family.',
+          'Premam': 'A young man experiences love at different stages of his life.',
+          'Vikram': 'A special investigation uncovers a dangerous criminal network.',
+          'Jai Bhim': 'A lawyer fights for justice for a tribal man who has been wrongfully arrested.'
+        };
+
+        const story = stories[title] || 'More information about this movie will be added soon.';
+
+        document.getElementById('detail-story').textContent = story;
+        detailsBox.style.display = 'block';
+        detailsBox.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+
+    document.getElementById('close-details').addEventListener('click', function () {
+      detailsBox.style.display = 'none';
+    });
+
+    // Search + Genre + Language
+    function filterMovies() {
+      const searchText = searchInput.value.toLowerCase();
+      const selectedGenre = genreFilter.value;
+      const selectedLanguage = languageFilter.value;
+
+      movieCards.forEach(function (card) {
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const genre = card.dataset.genre;
+        const language = card.dataset.language;
+
+        const matchesSearch = title.includes(searchText);
+
+        const matchesGenre =
+          selectedGenre === 'all' || genre === selectedGenre;
+
+        const matchesLanguage =
+          selectedLanguage === 'all' || language === selectedLanguage;
+
+        if (matchesSearch && matchesGenre && matchesLanguage) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', filterMovies);
+    genreFilter.addEventListener('change', filterMovies);
+    languageFilter.addEventListener('change', filterMovies);
+  </script>
+
+
+</body>
+
+</html>
