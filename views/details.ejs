@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= movie.title %> | TomatoFlix
+  </title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 30px;
+      background: #141414;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .details {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+      background: #222;
+      border-radius: 15px;
+    }
+
+    .details img {
+      width: 220px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #ff4b3e;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 12px 20px;
+      background: #e50914;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .navbar {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .navbar h1 {
+      color: #fa5038;
+      margin: 0 0 8px;
+    }
+
+    .navbar p {
+      color: #ccc;
+      margin: 0;
+    }
+
+    .navbar nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin-top: 15px;
+    }
+
+    .navbar nav a {
+      display: inline-block;
+      padding: 12px 24px;
+      color: white;
+      background: linear-gradient(135deg, #ff4b3e, #d90919);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .navbar nav a:hover {
+      background: linear-gradient(135deg, #ff6b5f, #ff1425);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('partials/navbar') %>
+    <div class="details">
+      <img src="<%= movie.poster %>" alt="<%= movie.title %>">
+
+      <h1>
+        <%= movie.title %>
+      </h1>
+      <p>Release Year: <%= movie.year %>
+      </p>
+      <p>Genre: <%= movie.genre %>
+      </p>
+      <p>Language: <%= movie.language %>
+      </p>
+      <p>Rating: <%= (movie.rating / 10).toFixed(1) %>/10</p>
+
+      <hr>
+
+      <p><strong>Director:</strong>
+        <%= movie.director || 'Not available' %>
+      </p>
+
+      <p><strong>Cast:</strong>
+        <%= movie.cast ? movie.cast.join(', ') : ' Not available' %>
+      </p>
+
+      <p><strong>Duration:</strong>
+        <%= movie.duration || 'Not available' %>
+      </p>
+
+      <h2>Storyline</h2>
+      <p>
+        <%= movie.synopsis || 'Synopsis not available yet.' %>
+      </p>
+
+      <p><strong>User Reviews:</strong>
+        <%= movie.reviewCount !==undefined ? movie.reviewCount.toLocaleString('en-IN') : 'Not available' %>
+      </p>
+
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+
+</html>
+S

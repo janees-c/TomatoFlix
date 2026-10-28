@@ -191,73 +191,109 @@
       object-fit: cover;
     }
 
-    /* Tablet */
-    @media (max-width: 768px) {
-      body {
-        padding: 12px;
-      }
-
-      .container {
-        padding: 16px;
-      }
-
-      .movie-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
-      }
-
-      .movie-card img {
-        height: 240px;
-      }
+    /* Navbar links */
+    .navbar nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      margin-top: 15px;
     }
 
-    /* Mobile */
-    @media (max-width: 480px) {
-      body {
-        padding: 8px;
-      }
+    .navbar nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
 
-      .container {
-        padding: 12px;
-      }
+    /* Hover effect */
+    .navbar nav a:hover {
+      background-color: #e50914;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
 
-      .navbar {
-        padding: 15px;
-      }
+    /* Attractive Navbar Buttons */
+    .navbar nav a {
+      display: inline-block;
+      padding: 12px 24px;
+      margin: 0 5px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ff4b3e, #d90919);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(229, 9, 20, 0.2);
+      transition: all 0.3s ease;
+    }
 
+    /* Hover Animation */
+    .navbar nav a:hover {
+      background: linear-gradient(135deg, #ff6b5f, #ff1425);
+      box-shadow: 0 0 20px rgba(255, 40, 40, 0.45);
+      transform: translateY(-3px);
+    }
+
+    /* Click Effect */
+    .navbar nav a:active {
+      transform: scale(0.96);
+    }
+
+    /* Remove default link styling from movie cards */
+    .movie-card .movie-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Movie title */
+    .movie-card .movie-info h3 {
+      color: #ff4b3e;
+      text-decoration: none;
+    }
+
+    /* Year and rating */
+    .movie-card .movie-info p {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    /* Keep the same style when hovering or visiting */
+    .movie-card .movie-link:visited,
+    .movie-card .movie-link:hover,
+    .movie-card .movie-link:active {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+
+    @media (max-width: 600px) {
       .movie-container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .navbar h1 {
+        font-size: 26px;
+      }
+
+      .navbar nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 10px;
       }
 
       .movie-card img {
-        height: 190px;
-      }
-
-      .movie-info {
-        padding: 10px;
-      }
-
-      .movie-info h3 {
-        font-size: 15px;
-        overflow-wrap: anywhere;
-      }
-
-      .movie-info p {
-        font-size: 13px;
-      }
-
-      #movieSearch,
-      #genreFilter,
-      #languageFilter {
         width: 100%;
-        max-width: 100%;
-        margin-bottom: 12px;
-      }
-
-      .details-box {
-        padding: 15px;
-        overflow-wrap: anywhere;
+        height: auto;
       }
     }
   </style>
@@ -265,152 +301,143 @@
 
 <body>
 
-  <header class="navbar">
-    <h1>TomatoFlix</h1>
-    <p>Discover your favourite movies!</p>
-  </header>
+  <%- include('partials/navbar') %>
 
-  <main class="container">
-    <h2>Popular Movies</h2>
-
-    <input type="text" id="movieSearch" placeholder="🔍 Search movies...">
+    <main class="container">
+      <h2>Popular Movies</h2>
 
 
-    <select id="genreFilter">
-      <option value="all">All Genres</option>
-      <option value="Action">Action</option>
-      <option value="Sci-Fi">Sci-Fi</option>
-      <option value="Drama">Drama</option>
-      <option value="Romance">Romance</option>
-      <option value="Thriller">Thriller</option>
-      <option value="Comedy">Comedy</option>
-    </select>
 
-    <select id="languageFilter">
-      <option value="all">All Languages</option>
-      <option value="English">English</option>
-      <option value="Malayalam">Malayalam</option>
-      <option value="Hindi">Hindi</option>
-      <option value="Tamil">Tamil</option>
-    </select>
+      <form action="/search" method="GET">
+        <input type="text" id="movieSearch" name="q" placeholder="🔍 Search movies...">
+        <button type="submit">Search</button>
+      </form>
 
 
-    <div class="movie-container">
 
-      <% movies.forEach(function(movie) { %>
 
-        <div class="movie-card" data-genre="<%= movie.genre %>" data-language="<%= movie.language %>">
-          <img src="<%= movie.poster %>" alt="<%= movie.title %>">
+      <form id="genreForm">
+        <select id="genreFilter" name="genre">
+          <option value="all">All Genres</option>
+          <option value="Action">Action</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Drama">Drama</option>
+          <option value="Romance">Romance</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Comedy">Comedy</option>
+        </select>
 
-          <div class="movie-info">
-            <h3>
-              <%= movie.title %>
-            </h3>
-            <p>Year: <%= movie.year %>
-            </p>
-            <p> Rating: <%= movie.rating %>%</p>
+        <button type="submit">Filter</button>
+      </form>
+
+
+
+      <form id="languageForm">
+        <select id="languageFilter" name="language">
+          <option value="all">All Languages</option>
+          <option value="English">English</option>
+          <option value="Malayalam">Malayalam</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Tamil">Tamil</option>
+        </select>
+
+        <button type="submit">Filter Language</button>
+      </form>
+
+      <% if (typeof searchQuery !=='undefined' && movies.length===0) { %>
+        <p class="no-results">
+          No movies found. Try another title!
+        </p>
+        <% } %>
+          <div class="movie-container">
+
+            <% movies.forEach(function(movie) { %>
+
+
+              <div class="movie-card" data-genre="<%= movie.genre %>" data-language="<%= movie.language %>">
+                <a href="/movies/<%= movie.id %>" class="movie-link">
+                  <img src="<%= movie.poster %>" alt="<%= movie.title %>">
+
+                  <div class="movie-info">
+                    <h3>
+                      <%= movie.title %>
+                    </h3>
+                    <p>Year: <%= movie.year %>
+                    </p>
+                    <p>Rating: <%= (movie.rating / 10).toFixed(1) %>/10</p>
+                  </div>
+                </a>
+              </div>
+              <% }); %>
+
           </div>
 
-        </div>
+    </main>
 
-        <% }); %>
+    <script>
+      const searchInput = document.getElementById('movieSearch');
+      const movieCards = document.querySelectorAll('.movie-card');
+      const genreFilter = document.getElementById('genreFilter');
+      const languageFilter = document.getElementById('languageFilter');
 
-    </div>
+      // Search + Genre + Language
+      function filterMovies() {
+        const searchText = searchInput.value.toLowerCase();
+        const selectedGenre = genreFilter.value;
+        const selectedLanguage = languageFilter.value;
 
-    <div id="movie-details" class="details-box">
-      <button id="close-details">Close ✖</button>
-      <h2 id="detail-title"></h2>
-      <p id="detail-year"></p>
-      <p id="detail-rating"></p>
-      <p id="detail-story"></p>
-    </div>
-  </main>
+        movieCards.forEach(function (card) {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const genre = card.dataset.genre;
+          const language = card.dataset.language;
 
-  <script>
-    const searchInput = document.getElementById('movieSearch');
-    const movieCards = document.querySelectorAll('.movie-card');
-    const detailsBox = document.getElementById('movie-details');
+          const matchesSearch = title.includes(searchText);
 
-    const genreFilter = document.getElementById('genreFilter');
-    const languageFilter = document.getElementById('languageFilter');
+          const matchesGenre =
+            selectedGenre === 'all' || genre === selectedGenre;
 
-    // Movie details
+          const matchesLanguage =
+            selectedLanguage === 'all' || language === selectedLanguage;
 
-    // Movie details
-    movieCards.forEach(function (card) {
-      card.addEventListener('click', function () {
-        const title = card.querySelector('h3').textContent.trim();
-        const info = card.querySelectorAll('.movie-info p');
-
-        document.getElementById('detail-title').textContent = title;
-        document.getElementById('detail-year').textContent = info[0].textContent;
-        document.getElementById('detail-rating').textContent = info[1].textContent;
-
-        const stories = {
-          'Inception': 'A thief enters peoples dreams to steal secrets.',
-          'Interstellar': 'Explorers travel through space to search for a future for humanity.',
-          'The Dark Knight': 'Batman faces a dangerous criminal threatening Gotham City.',
-          'Manjummel Boys': 'A group of friends travel to Kodaikanal, where a cave adventure becomes a desperate rescue mission.',
-          'Premalu': 'A young man navigates love and relationships in this Malayalam romantic comedy.',
-          'Leo': 'A cafe owner with a mysterious past faces violent threats.',
-          '3 Idiots': 'Three engineering students challenge the pressure and expectations of the education system.',
-          'The Avengers': 'Earths mightiest heroes unite to protect the world.',
-          'Bangalore Days': 'Three cousins experience love, friendship and life in Bangalore.',
-          'Dangal': 'A former wrestler trains his daughters to become champion wrestlers.',
-          'Jai Bhim': 'A lawyer fights for justice for a tribal man who has been wrongfully arrested.',
-          'Avatar': 'A former Marine becomes involved in the struggle to protect the world of Pandora.',
-          'C.I.D. Moosa': 'A humorous Malayalam action comedy about a private detective and his adventures.',
-          'Drishyam': 'A man goes to extraordinary lengths to protect his family.',
-          'Premam': 'A young man experiences love at different stages of his life.',
-          'Vikram': 'A special investigation uncovers a dangerous criminal network.',
-          'Jai Bhim': 'A lawyer fights for justice for a tribal man who has been wrongfully arrested.'
-        };
-
-        const story = stories[title] || 'More information about this movie will be added soon.';
-
-        document.getElementById('detail-story').textContent = story;
-        detailsBox.style.display = 'block';
-        detailsBox.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
+          if (matchesSearch && matchesGenre && matchesLanguage) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
 
 
-    document.getElementById('close-details').addEventListener('click', function () {
-      detailsBox.style.display = 'none';
-    });
+      document.getElementById('genreForm').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-    // Search + Genre + Language
-    function filterMovies() {
-      const searchText = searchInput.value.toLowerCase();
-      const selectedGenre = genreFilter.value;
-      const selectedLanguage = languageFilter.value;
+        const genre = genreFilter.value;
 
-      movieCards.forEach(function (card) {
-        const title = card.querySelector('h3').textContent.toLowerCase();
-        const genre = card.dataset.genre;
-        const language = card.dataset.language;
-
-        const matchesSearch = title.includes(searchText);
-
-        const matchesGenre =
-          selectedGenre === 'all' || genre === selectedGenre;
-
-        const matchesLanguage =
-          selectedLanguage === 'all' || language === selectedLanguage;
-
-        if (matchesSearch && matchesGenre && matchesLanguage) {
-          card.style.display = 'block';
+        if (genre === 'all') {
+          window.location.href = '/';
         } else {
-          card.style.display = 'none';
+          window.location.href = '/genre/' + encodeURIComponent(genre);
         }
       });
-    }
 
-    searchInput.addEventListener('input', filterMovies);
-    genreFilter.addEventListener('change', filterMovies);
-    languageFilter.addEventListener('change', filterMovies);
-  </script>
 
+      document.getElementById('languageForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const language = languageFilter.value;
+
+        if (language === 'all') {
+          window.location.href = '/';
+        } else {
+          window.location.href = '/language/' + encodeURIComponent(language);
+        }
+      });
+
+
+
+    </script>
+
+    <%- include('partials/footer') %>
 
 </body>
 
